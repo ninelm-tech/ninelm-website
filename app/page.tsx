@@ -1,221 +1,232 @@
+'use client';
+
 /* eslint-disable @next/next/no-img-element */
+
+import { useState } from 'react';
 
 // Ninelm brand colours
 // Blue:       #1B6FEB
 // Dark navy:  #0D1B3E
 // Mid navy:   #0a1628
-// Font:       Aeonik (substitute: Plus Jakarta Sans)
 
 function LogoMark({ size = 32, white = false }: { size?: number; white?: boolean }) {
-  const fill = white ? "#ffffff" : "#1B6FEB";
+  const fill = white ? '#ffffff' : '#1B6FEB';
   return (
     <svg width={size} height={size} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect width="40" height="40" rx="10" fill={fill} />
       <path
         d="M10 10h5.5l9 13V10H30v20h-5.5l-9-13V30H10V10z"
         fill="white"
-        fillOpacity={white ? "0.15" : "1"}
+        fillOpacity={white ? '0.15' : '1'}
       />
       {white && (
-        <path
-          d="M10 10h5.5l9 13V10H30v20h-5.5l-9-13V30H10V10z"
-          fill="white"
-        />
+        <path d="M10 10h5.5l9 13V10H30v20h-5.5l-9-13V30H10V10z" fill="white" />
       )}
     </svg>
   );
 }
 
-export default function Home() {
-  return (
-    <main className="min-h-screen" style={{ backgroundColor: "#0a1628", color: "#ffffff" }}>
+export default function ComingSoon() {
+  const [email, setEmail] = useState('');
+  const [state, setState] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [errorMsg, setErrorMsg] = useState('');
 
-      {/* ── Nav ─────────────────────────────────────────────── */}
-      <nav
-        className="fixed top-0 inset-x-0 z-50 backdrop-blur-md"
-        style={{ borderBottom: "1px solid rgba(255,255,255,0.06)", backgroundColor: "rgba(10,22,40,0.85)" }}
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!email) return;
+    setState('loading');
+    setErrorMsg('');
+
+    try {
+      const res = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      });
+
+      if (res.ok) {
+        setState('success');
+        setEmail('');
+      } else {
+        const data = await res.json();
+        setErrorMsg(data.error ?? 'Something went wrong. Try again.');
+        setState('error');
+      }
+    } catch {
+      setErrorMsg('Network error. Please try again.');
+      setState('error');
+    }
+  }
+
+  return (
+    <main
+      className="min-h-screen flex flex-col"
+      style={{ backgroundColor: '#0a1628', color: '#ffffff' }}
+    >
+      <style>{`
+        @keyframes pulse-glow {
+          0%, 100% { opacity: 0.15; transform: scale(1); }
+          50%       { opacity: 0.25; transform: scale(1.08); }
+        }
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50%       { transform: translateY(-10px); }
+        }
+        @keyframes fade-up {
+          from { opacity: 0; transform: translateY(20px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        .animate-pulse-glow { animation: pulse-glow 4s ease-in-out infinite; }
+        .animate-float       { animation: float 6s ease-in-out infinite; }
+        .animate-fade-up     { animation: fade-up 0.7s ease-out forwards; }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+        .delay-400 { animation-delay: 0.4s; }
+        .delay-500 { animation-delay: 0.5s; }
+      `}</style>
+
+      {/* Ambient glow — top centre */}
+      <div
+        className="pointer-events-none fixed inset-0 overflow-hidden"
+        aria-hidden="true"
       >
-        <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <LogoMark size={28} white />
-            <span className="text-base font-semibold tracking-tight text-white">Ninelm</span>
-          </div>
-          <a
-            href="mailto:hello@ninelm.com"
-            className="text-sm transition-colors text-white/50 hover:text-white"
-          >
-            hello@ninelm.com
-          </a>
+        <div
+          className="animate-pulse-glow absolute -top-40 left-1/2 -translate-x-1/2 w-[700px] h-[700px] rounded-full"
+          style={{ background: 'radial-gradient(circle, #1B6FEB 0%, transparent 70%)' }}
+        />
+      </div>
+
+      {/* Nav */}
+      <nav className="relative z-10 px-6 pt-8 flex items-center justify-between max-w-5xl mx-auto w-full">
+        <div className="flex items-center gap-2.5">
+          <LogoMark size={28} white />
+          <span className="text-base font-semibold tracking-tight text-white">Ninelm</span>
         </div>
+        <a
+          href="mailto:hello@ninelm.com"
+          className="text-sm transition-colors text-white/40 hover:text-white"
+        >
+          hello@ninelm.com
+        </a>
       </nav>
 
-      {/* ── Hero ─────────────────────────────────────────────── */}
-      <section className="pt-44 pb-32 px-6">
-        <div className="max-w-5xl mx-auto">
-          {/* Blue pill label */}
-          <div className="inline-flex items-center gap-2 rounded-full px-3 py-1 mb-8 text-xs font-semibold tracking-widest uppercase"
-            style={{ backgroundColor: "rgba(27,111,235,0.15)", color: "#1B6FEB", border: "1px solid rgba(27,111,235,0.3)" }}>
-            Lagos, Nigeria
-          </div>
+      {/* Hero */}
+      <section className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 py-24 text-center">
 
-          <h1 className="text-5xl sm:text-6xl md:text-[72px] font-extrabold leading-[1.04] tracking-tight max-w-3xl">
-            Building technology
-            <br />
-            <span style={{ color: "#1B6FEB" }}>for Africa.</span>
-          </h1>
-
-          <p className="mt-7 text-lg max-w-xl leading-relaxed" style={{ color: "rgba(255,255,255,0.55)" }}>
-            We build products that solve real, everyday problems for Africans.
-            Starting with vehicle recovery — and just getting started.
-          </p>
-
-          <div className="mt-10 flex flex-wrap gap-4">
-            <a
-              href="#products"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold text-white transition-opacity hover:opacity-90"
-              style={{ backgroundColor: "#1B6FEB" }}
-            >
-              See our products
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-              </svg>
-            </a>
-            <a
-              href="mailto:hello@ninelm.com"
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-semibold transition-colors"
-              style={{ color: "rgba(255,255,255,0.7)", border: "1px solid rgba(255,255,255,0.12)" }}
-            >
-              Get in touch
-            </a>
+        {/* Logo mark — floating */}
+        <div className="animate-float mb-10 opacity-0 animate-fade-up" style={{ animationFillMode: 'forwards' }}>
+          <div
+            className="inline-flex items-center justify-center w-20 h-20 rounded-2xl"
+            style={{ backgroundColor: '#1B6FEB', boxShadow: '0 0 60px rgba(27,111,235,0.4)' }}
+          >
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+              <path d="M5 5h11l18 26V5h6v30H29L11 9V35H5V5z" fill="white" />
+            </svg>
           </div>
         </div>
-      </section>
 
-      {/* ── Divider ──────────────────────────────────────────── */}
-      <div className="max-w-5xl mx-auto px-6">
-        <div className="h-px" style={{ backgroundColor: "rgba(255,255,255,0.06)" }} />
-      </div>
+        {/* Pill */}
+        <div
+          className="opacity-0 animate-fade-up delay-100 inline-flex items-center gap-2 rounded-full px-3 py-1 mb-6 text-xs font-bold tracking-widest uppercase"
+          style={{
+            backgroundColor: 'rgba(27,111,235,0.12)',
+            color: '#1B6FEB',
+            border: '1px solid rgba(27,111,235,0.3)',
+            animationFillMode: 'forwards',
+          }}
+        >
+          Lagos, Nigeria — Coming soon
+        </div>
 
-      {/* ── Products ─────────────────────────────────────────── */}
-      <section id="products" className="py-28 px-6">
-        <div className="max-w-5xl mx-auto">
-          <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: "#1B6FEB" }}>
-            Products
-          </p>
-          <h2 className="text-3xl font-bold tracking-tight mb-12" style={{ color: "#ffffff" }}>
-            What we&apos;re building
-          </h2>
+        {/* Headline */}
+        <h1
+          className="opacity-0 animate-fade-up delay-200 text-5xl sm:text-6xl md:text-[68px] font-extrabold leading-[1.05] tracking-tight max-w-2xl"
+          style={{ animationFillMode: 'forwards' }}
+        >
+          Technology
+          <br />
+          <span style={{ color: '#1B6FEB' }}>built for Africa.</span>
+        </h1>
 
-          {/* LRR card */}
-          <div
-            className="rounded-2xl p-8 sm:p-10 max-w-2xl transition-all duration-300"
-            style={{
-              backgroundColor: "#0D1B3E",
-              border: "1px solid rgba(27,111,235,0.2)",
-            }}
-          >
-            <div className="flex items-start justify-between gap-4 mb-6">
-              <div>
-                <span
-                  className="inline-block text-xs font-bold tracking-widest uppercase mb-3"
-                  style={{ color: "rgba(255,255,255,0.3)" }}
-                >
-                  001
-                </span>
-                <h3 className="text-2xl font-bold text-white">
-                  Lagos Roadside Rescue
-                </h3>
-                <p className="text-sm mt-1" style={{ color: "rgba(255,255,255,0.35)" }}>
-                  lrr.ninelm.com
-                </p>
-              </div>
-              <span
-                className="shrink-0 mt-1 inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold"
-                style={{ backgroundColor: "rgba(34,197,94,0.12)", color: "#4ade80", border: "1px solid rgba(34,197,94,0.25)" }}
-              >
-                Live
+        {/* Subtext */}
+        <p
+          className="opacity-0 animate-fade-up delay-300 mt-6 text-lg max-w-md leading-relaxed"
+          style={{ color: 'rgba(255,255,255,0.5)', animationFillMode: 'forwards' }}
+        >
+          We&apos;re building products that solve real, everyday problems for Africans.
+          Be the first to know when we launch.
+        </p>
+
+        {/* Waitlist form */}
+        <div
+          className="opacity-0 animate-fade-up delay-400 mt-10 w-full max-w-md"
+          style={{ animationFillMode: 'forwards' }}
+        >
+          {state === 'success' ? (
+            <div
+              className="flex items-center justify-center gap-3 rounded-2xl px-6 py-4"
+              style={{ backgroundColor: 'rgba(34,197,94,0.1)', border: '1px solid rgba(34,197,94,0.25)' }}
+            >
+              <svg className="w-5 h-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="#4ade80" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+              <span className="text-sm font-medium" style={{ color: '#4ade80' }}>
+                You&apos;re on the list — we&apos;ll be in touch.
               </span>
             </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
+              <input
+                type="email"
+                required
+                placeholder="your@email.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={state === 'loading'}
+                className="flex-1 rounded-xl px-4 py-3 text-sm text-white placeholder-white/30 outline-none transition-all"
+                style={{
+                  backgroundColor: 'rgba(255,255,255,0.06)',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                }}
+                onFocus={(e) => (e.currentTarget.style.borderColor = 'rgba(27,111,235,0.6)')}
+                onBlur={(e) => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)')}
+              />
+              <button
+                type="submit"
+                disabled={state === 'loading'}
+                className="shrink-0 rounded-xl px-5 py-3 text-sm font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
+                style={{ backgroundColor: '#1B6FEB' }}
+              >
+                {state === 'loading' ? 'Joining…' : 'Join the waitlist'}
+              </button>
+            </form>
+          )}
 
-            <p className="leading-relaxed" style={{ color: "rgba(255,255,255,0.55)" }}>
-              On-demand roadside assistance connecting Nigerian drivers with
-              verified service providers — quickly, transparently, and without
-              friction. Book via WhatsApp in under two minutes.
+          {state === 'error' && (
+            <p className="mt-3 text-xs text-center" style={{ color: 'rgba(248,113,113,0.9)' }}>
+              {errorMsg}
             </p>
+          )}
 
-            <a
-              href="https://lrr.ninelm.com"
-              className="inline-flex items-center gap-2 mt-8 text-sm font-semibold transition-colors"
-              style={{ color: "#1B6FEB" }}
-            >
-              Visit LRR
-              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-              </svg>
-            </a>
-          </div>
-
-          {/* Next product placeholder */}
-          <div
-            className="mt-5 rounded-2xl p-8 sm:p-10 max-w-2xl"
-            style={{ border: "1px dashed rgba(255,255,255,0.1)" }}
+          <p
+            className="mt-4 text-xs text-center"
+            style={{ color: 'rgba(255,255,255,0.25)' }}
           >
-            <span
-              className="inline-block text-xs font-bold tracking-widest uppercase mb-3"
-              style={{ color: "rgba(255,255,255,0.2)" }}
-            >
-              002
-            </span>
-            <p className="text-sm" style={{ color: "rgba(255,255,255,0.25)" }}>
-              More products in the works.
-            </p>
-          </div>
+            No spam. Unsubscribe anytime.
+          </p>
         </div>
       </section>
 
-      {/* ── Divider ──────────────────────────────────────────── */}
-      <div className="max-w-5xl mx-auto px-6">
-        <div className="h-px" style={{ backgroundColor: "rgba(255,255,255,0.06)" }} />
-      </div>
-
-      {/* ── Contact ──────────────────────────────────────────── */}
-      <section id="contact" className="py-28 px-6">
-        <div className="max-w-5xl mx-auto">
-          <p className="text-xs font-bold tracking-widest uppercase mb-3" style={{ color: "#1B6FEB" }}>
-            Get in touch
-          </p>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mb-4">
-            Let&apos;s talk.
-          </h2>
-          <p className="mb-8 max-w-md leading-relaxed" style={{ color: "rgba(255,255,255,0.5)" }}>
-            Partnerships, press, or just want to say hello — we&apos;d love to hear from you.
-          </p>
-          <a
-            href="mailto:hello@ninelm.com"
-            className="inline-flex items-center gap-2 text-lg font-semibold transition-opacity hover:opacity-80"
-            style={{ color: "#1B6FEB" }}
-          >
-            hello@ninelm.com
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-            </svg>
-          </a>
-        </div>
-      </section>
-
-      {/* ── Footer ───────────────────────────────────────────── */}
-      <footer className="py-8 px-6" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
-        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <LogoMark size={20} white />
-            <span className="text-sm font-semibold text-white">Ninelm Technologies</span>
-          </div>
-          <span className="text-sm" style={{ color: "rgba(255,255,255,0.3)" }}>
-            © {new Date().getFullYear()} Ninelm Technologies. Lagos, Nigeria.
-          </span>
-        </div>
+      {/* Footer */}
+      <footer
+        className="relative z-10 py-8 px-6 text-center"
+        style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
+      >
+        <span className="text-sm" style={{ color: 'rgba(255,255,255,0.2)' }}>
+          © {new Date().getFullYear()} Ninelm Technologies. Lagos, Nigeria.
+        </span>
       </footer>
-
     </main>
   );
 }
