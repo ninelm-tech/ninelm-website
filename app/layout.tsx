@@ -8,7 +8,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: "Ninelm Technologies — Building technology for Africa",
   description:
-    "Ninelm Technologies builds products that solve real, everyday problems for Africans. Our first product is LRR — Lagos Roadside Rescue.",
+    "Ninelm Technologies builds products that solve real, everyday problems for Africans. Our first product is LRR — Local Roadside Rescue.",
   metadataBase: new URL("https://ninelm.com"),
   openGraph: {
     title: "Ninelm Technologies — Building technology for Africa",
