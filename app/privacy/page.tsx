@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import Logo from '@/components/Logo';
 import SiteHeader from '@/components/SiteHeader';
+import SiteFooter from '@/components/SiteFooter';
 
 export const metadata: Metadata = {
   title: 'Privacy Policy — Ninelm',
@@ -112,7 +112,7 @@ const SECTIONS = [
     body: (
       <p className="mt-4 max-w-[62ch] text-[16.5px] leading-relaxed text-[#7B768E]">
         If we change this policy we&apos;ll update the date at the top of this page, and we&apos;ll tell you directly when a change materially affects how your data is used. For anything privacy-related, reach us at{' '}
-        <a href="mailto:hello@ninelm.com" className="text-[#003DB4] hover:text-[#00287a]">hello@ninelm.com</a> or by post at 67 Kofo Abayomi Street, Victoria Island, Lagos.
+        <a href="mailto:hello@ninelm.com" className="text-[#003DB4] hover:text-[#00287a]">hello@ninelm.com</a> or by post at 67 Kofo Abayomi Street, Victoria Island, Lagos, Nigeria.
       </p>
     ),
   },
@@ -199,22 +199,7 @@ export default function PrivacyPage() {
         </div>
       </section>
 
-      <footer className="border-t border-[#E4E8F0] bg-white">
-        <div className="mx-auto flex max-w-[1200px] flex-wrap items-center justify-between gap-6 px-6 py-11">
-          <a href="/" className="flex items-center">
-            <Logo height={24} />
-          </a>
-          <div className="flex flex-wrap gap-[26px]">
-            <a href="mailto:hello@ninelm.com" className="text-sm font-medium text-[#7B768E] transition-colors hover:text-[#003DB4]">hello@ninelm.com</a>
-            <a href="https://staging.lrr.ninelm.com" target="_blank" rel="noreferrer" className="text-sm font-medium text-[#7B768E] transition-colors hover:text-[#003DB4]">LRR</a>
-            <a href="/privacy" className="text-sm font-medium text-[#7B768E] transition-colors hover:text-[#003DB4]">Privacy</a>
-            <a href="/terms" className="text-sm font-medium text-[#7B768E] transition-colors hover:text-[#003DB4]">Terms</a>
-          </div>
-        </div>
-        <div className="border-t border-[#E4E8F0]">
-          <div className="mx-auto max-w-[1200px] px-6 py-5 text-[13px] text-[#7B768E]">© 2026 Ninelm Technologies Limited. All rights reserved.</div>
-        </div>
-      </footer>
+      <SiteFooter />
     </main>
   );
 }
