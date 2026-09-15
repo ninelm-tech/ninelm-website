@@ -15,7 +15,7 @@ export default function SiteFooter() {
         </div>
       </div>
       <div className="border-t border-[#E4E8F0]">
-        <div className="mx-auto flex max-w-[1200px] flex-wrap items-center justify-between gap-2 px-6 py-5 text-[13px] text-[#7B768E]">
+        <div className="mx-auto flex max-w-[1200px] flex-col gap-1 px-6 py-5 text-[13px] text-[#7B768E]">
           <span>© 2026 Ninelm Technologies Limited. All rights reserved.</span>
           <span>67 Kofo Abayomi Street, Victoria Island, Lagos, Nigeria</span>
         </div>
