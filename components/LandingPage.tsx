@@ -19,14 +19,18 @@ function pad(n: number) {
 }
 
 function useCountdown(target: number) {
-  const [left, setLeft] = useState(() => Math.max(0, target - Date.now()));
+  // Start at null (not Date.now()-derived) so server and pre-hydration client
+  // markup match exactly; the real value is only computed after mount.
+  const [left, setLeft] = useState<number | null>(null);
 
   useEffect(() => {
-    const id = setInterval(() => setLeft(Math.max(0, target - Date.now())), 1000);
+    const tick = () => setLeft(Math.max(0, target - Date.now()));
+    tick();
+    const id = setInterval(tick, 1000);
     return () => clearInterval(id);
   }, [target]);
 
-  const s = Math.floor(left / 1000);
+  const s = left === null ? 0 : Math.floor(left / 1000);
   return {
     days: pad(Math.floor(s / 86400)),
     hours: pad(Math.floor(s / 3600) % 24),
