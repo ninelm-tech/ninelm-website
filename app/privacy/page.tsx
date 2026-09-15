@@ -24,7 +24,7 @@ const SECTIONS = [
             ['Identity and contact.', 'Your name, WhatsApp number, and — for operators — business details, vehicle information and verification documents.'],
             ['Request data.', 'The location you share, what you need help with, the quote you were given, job status and the ratings left afterwards.'],
             ['Payment records.', 'Deposit and balance amounts, timestamps and receipts. Card and bank details are handled by our payment provider, not stored by us.'],
-            ['Technical data.', 'Device and browser information, and basic analytics about how our pages are used.'],
+            ['Technical data.', 'Device, browser and approximate location (country or city), and anonymous analytics about how our pages are used — not tied to your identity.'],
           ].map(([label, text]) => (
             <li key={label} className="flex max-w-[62ch] gap-3 text-[16.5px] leading-relaxed text-[#7B768E]">
               <span className="font-bold text-[#003DB4]">—</span>
@@ -77,7 +77,7 @@ const SECTIONS = [
     head: ['Who we', 'share with.'],
     body: (
       <p className="mt-4 max-w-[62ch] text-[16.5px] leading-relaxed text-[#7B768E]">
-        Only the parties a job needs: the operator assigned to your request, our messaging and payment providers, our hosting and error-monitoring providers, and professional advisers or authorities where the law requires it. Operators receive the minimum needed to reach you and complete the job — not your wider history.
+        Only the parties a job needs: the operator assigned to your request, our messaging and payment providers, our hosting, analytics and error-monitoring providers, and professional advisers or authorities where the law requires it. Operators receive the minimum needed to reach you and complete the job — not your wider history.
       </p>
     ),
   },
@@ -88,7 +88,7 @@ const SECTIONS = [
     head: ['Retention and', 'security.'],
     body: (
       <p className="mt-4 max-w-[62ch] text-[16.5px] leading-relaxed text-[#7B768E]">
-        Job and payment records are kept while your account is active and afterwards for as long as tax, accounting and dispute-resolution rules require. Verification documents are kept while an operator is on the network. Access is restricted to staff who need it, transfers are encrypted, and we review who can see what on a regular basis.
+        Job and payment records are kept while your account is active and afterwards for as long as tax, accounting and dispute-resolution rules require. Verification documents are kept while an operator is on the network. Website analytics are anonymous and are not kept in a form that identifies a visitor. Access is restricted to staff who need it, transfers are encrypted, and we review who can see what on a regular basis.
       </p>
     ),
   },
@@ -99,7 +99,7 @@ const SECTIONS = [
     head: ['Your', 'rights.'],
     body: (
       <p className="mt-4 max-w-[62ch] text-[16.5px] leading-relaxed text-[#7B768E]">
-        You can ask us for a copy of your data, ask us to correct it, ask us to delete what we&apos;re not required to keep, object to a particular use, or withdraw consent for non-essential messages. Write to{' '}
+        You can ask us for a copy of your data, ask us to correct it, ask us to delete what we&apos;re not required to keep, object to a particular use, or withdraw consent for non-essential messages. Because our website analytics are anonymous and not linked to your identity, there&apos;s no individual record for us to look up or delete. Write to{' '}
         <a href="mailto:hello@ninelm.com" className="text-[#003DB4] hover:text-[#00287a]">hello@ninelm.com</a> and we&apos;ll respond within 30 days.
       </p>
     ),
