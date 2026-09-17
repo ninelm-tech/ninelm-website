@@ -12,7 +12,7 @@ import SiteFooter from './SiteFooter';
 // Border: #E4E8F0
 // Teal:   #14B8A6 / dark #0F766E
 
-const LAUNCH_DATE = new Date('2026-09-21T09:00:00+01:00').getTime();
+const LAUNCH_DATE = new Date('2026-09-25T09:00:00+01:00').getTime();
 
 function pad(n: number) {
   return String(n).padStart(2, '0');
