@@ -312,17 +312,6 @@ export default function LandingPage() {
                   </div>
                 ))}
               </div>
-              <div className="flex flex-col items-start gap-3">
-                <a
-                  href="https://staging.lrr.ninelm.com"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="rounded-2xl bg-white px-[26px] py-4 text-[15px] font-bold text-[#003DB4] transition-colors hover:bg-[#DCE6FA]"
-                >
-                  Preview LRR →
-                </a>
-                <span className="text-[13px] text-[#A9C2F5]">↳ staging.lrr.ninelm.com</span>
-              </div>
             </div>
           </div>
         </div>
