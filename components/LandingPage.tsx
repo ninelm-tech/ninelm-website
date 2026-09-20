@@ -205,10 +205,10 @@ export default function LandingPage() {
                 <div className="rounded-[14px] border border-[#003DB4] bg-[#EAF0FC] p-3">
                   <div className="flex items-center justify-between gap-2">
                     <span className="text-[13px] font-bold">Operator en route</span>
-                    <span className="rounded-full bg-white px-2 py-0.5 text-[9px] font-bold uppercase tracking-[.06em] text-[#003DB4]">Tracking</span>
+                    <span className="rounded-full bg-white px-2 py-0.5 text-[9px] font-bold uppercase tracking-[.06em] text-[#003DB4]">En route</span>
                   </div>
                   <div className="mt-1 flex justify-between text-[11px] text-[#7B768E]">
-                    <span>Location link shared</span>
+                    <span>Confirmed on WhatsApp</span>
                     <span className="font-bold text-[#003DB4]">ETA 12 mins</span>
                   </div>
                 </div>
@@ -258,7 +258,7 @@ export default function LandingPage() {
             Help is <em className="not-italic italic text-[#003DB4]">on the way.</em>
           </h2>
           <p className="mt-5 max-w-[62ch] text-[17.5px] leading-relaxed text-[#7B768E]">
-            LRR — Local Roadside Rescue — connects stranded motorists with a network of verified roadside operators over WhatsApp. It goes live shortly. Request help, see the price before you confirm, and track your operator until they arrive.
+            LRR — Local Roadside Rescue — connects stranded motorists with a network of verified roadside operators over WhatsApp. It goes live shortly. Request help, see the price before you confirm, and get a WhatsApp update the moment your operator arrives.
           </p>
 
           <div className="mt-[52px] grid grid-cols-1 gap-5 sm:grid-cols-[repeat(auto-fit,minmax(280px,1fr))]">
@@ -271,8 +271,8 @@ export default function LandingPage() {
             </div>
             <div className="rounded-2xl bg-[#003DB4] p-8">
               <div className="text-[26px]">📍</div>
-              <h3 className="mt-[18px] text-xl font-extrabold tracking-[-.03em] text-white">Dispatch &amp; live tracking</h3>
-              <p className="mt-3 text-[15px] leading-relaxed text-[#DCE6FA]">We match you with a verified operator nearby and share their location link the moment they&apos;re dispatched.</p>
+              <h3 className="mt-[18px] text-xl font-extrabold tracking-[-.03em] text-white">Fast, live dispatch</h3>
+              <p className="mt-3 text-[15px] leading-relaxed text-[#DCE6FA]">We match you with a verified operator nearby the moment you request help, and text you as soon as they&apos;re on the way.</p>
             </div>
             <div className="rounded-2xl border border-[#E4E8F0] bg-[#F6FAFF] p-8">
               <div className="text-[26px]">🛡️</div>
@@ -335,7 +335,7 @@ export default function LandingPage() {
               {[
                 { n: '01', title: 'Send "SOS" on WhatsApp', body: 'Message "SOS" to the LRR WhatsApp line and share your location. We handle everything from there — no app needed.', last: false },
                 { n: '02', title: 'We dispatch the right operator', body: 'Our system matches you with a verified operator nearby, based on what you need. You see the quote before you confirm.', last: false },
-                { n: '03', title: 'Stay updated automatically', body: "Get your operator's location link when they're dispatched, plus WhatsApp updates when they arrive and when the job's done.", last: true },
+                { n: '03', title: 'Stay updated automatically', body: "Get a WhatsApp message the moment an operator is dispatched, when they arrive, and when the job's done.", last: true },
               ].map((s) => (
                 <div key={s.n} className="flex items-start gap-6">
                   <div
