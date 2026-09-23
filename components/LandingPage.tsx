@@ -12,7 +12,7 @@ import SiteFooter from './SiteFooter';
 // Border: #E4E8F0
 // Teal:   #14B8A6 / dark #0F766E
 
-const LAUNCH_DATE = new Date('2026-09-25T09:00:00+01:00').getTime();
+const LAUNCH_DATE = new Date('2026-09-28T09:00:00+01:00').getTime();
 
 function pad(n: number) {
   return String(n).padStart(2, '0');
@@ -141,7 +141,7 @@ export default function LandingPage() {
         <div className="min-w-0">
           <div className="inline-flex items-center gap-2.5 rounded-full border border-[#E4E8F0] bg-white py-1.5 pl-3 pr-4">
             <span className="nl-pulse-dot block h-2 w-2 rounded-full bg-[#14B8A6]" />
-            <span className="text-[11.5px] font-bold uppercase tracking-[.14em] text-[#003DB4]">LRR launches soon</span>
+            <span className="text-[11.5px] font-bold uppercase tracking-[.14em] text-[#003DB4]">LRR launches Monday 28th</span>
           </div>
 
           <h1 className="mt-6 text-[46px] font-extrabold leading-[.98] tracking-[-.045em] sm:text-[64px] md:text-[78px]">
@@ -258,7 +258,7 @@ export default function LandingPage() {
             Help is <em className="not-italic italic text-[#003DB4]">on the way.</em>
           </h2>
           <p className="mt-5 max-w-[62ch] text-[17.5px] leading-relaxed text-[#7B768E]">
-            LRR — Local Roadside Rescue — connects stranded motorists with a network of verified roadside operators over WhatsApp. It goes live shortly. Request help, see the price before you confirm, and get a WhatsApp update the moment your operator arrives.
+            LRR — Local Roadside Rescue — connects stranded motorists with a network of verified roadside operators over WhatsApp. It goes live Monday 28th. Request help, see the price before you confirm, and get a WhatsApp update the moment your operator arrives.
           </p>
 
           <div className="mt-[52px] grid grid-cols-1 gap-5 sm:grid-cols-[repeat(auto-fit,minmax(280px,1fr))]">
