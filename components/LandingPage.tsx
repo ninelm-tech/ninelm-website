@@ -264,28 +264,22 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <div className="mt-8 grid grid-cols-1 gap-8 rounded-2xl bg-[#003DB4] p-8 sm:p-12 md:grid-cols-2 md:items-center">
-            <div>
-              <div className="text-[11.5px] font-bold uppercase tracking-[.2em] text-[#A9C2F5]">Live now</div>
-              <h3 className="mt-3.5 text-[28px] font-extrabold leading-[1.08] tracking-[-.035em] text-white sm:text-[38px]">
-                LRR is
-                <br />
-                <em className="not-italic italic text-[#A9C2F5]">here.</em>
-              </h3>
-              <p className="mt-3.5 max-w-[46ch] text-base leading-relaxed text-[#DCE6FA]">
-                One WhatsApp message gets a verified operator dispatched to you. Operators can register for the network any time — no setup fee, no long contract.
-              </p>
-            </div>
-            <div className="flex min-w-0 flex-col items-start gap-5">
-              <a
-                href={getLrrUrl()}
-                target="_blank"
-                rel="noreferrer"
-                className="rounded-2xl bg-white px-[26px] py-4 text-[15px] font-semibold text-[#003DB4] transition-colors hover:bg-[#DCE6FA]"
-              >
-                Try LRR now →
-              </a>
-            </div>
+          <div className="mt-8 rounded-2xl bg-[#003DB4] p-8 sm:p-12">
+            <div className="text-[11.5px] font-bold uppercase tracking-[.2em] text-[#A9C2F5]">Live now</div>
+            <h3 className="mt-3.5 text-[28px] font-extrabold leading-[1.08] tracking-[-.035em] text-white sm:text-[38px]">
+              LRR is <em className="not-italic italic text-[#A9C2F5]">here.</em>
+            </h3>
+            <p className="mt-3.5 max-w-[46ch] text-base leading-relaxed text-[#DCE6FA]">
+              One WhatsApp message gets a verified operator dispatched to you. Operators can register for the network any time — no setup fee, no long contract.
+            </p>
+            <a
+              href={getLrrUrl()}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-7 inline-block rounded-2xl bg-white px-[26px] py-4 text-[15px] font-semibold text-[#003DB4] transition-colors hover:bg-[#DCE6FA]"
+            >
+              Try LRR now →
+            </a>
           </div>
         </div>
       </section>
