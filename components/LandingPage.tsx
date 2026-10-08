@@ -1,8 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import SiteHeader from './SiteHeader';
 import SiteFooter from './SiteFooter';
+import { getLrrUrl } from '@/config/env';
 
 // Ninelm brand colours (this design)
 // Blue:   #003DB4 / hover #00287a
@@ -11,33 +12,6 @@ import SiteFooter from './SiteFooter';
 // Bg:     #F6FAFF
 // Border: #E4E8F0
 // Teal:   #14B8A6 / dark #0F766E
-
-const LAUNCH_DATE = new Date('2026-09-28T09:00:00+01:00').getTime();
-
-function pad(n: number) {
-  return String(n).padStart(2, '0');
-}
-
-function useCountdown(target: number) {
-  // Start at null (not Date.now()-derived) so server and pre-hydration client
-  // markup match exactly; the real value is only computed after mount.
-  const [left, setLeft] = useState<number | null>(null);
-
-  useEffect(() => {
-    const tick = () => setLeft(Math.max(0, target - Date.now()));
-    tick();
-    const id = setInterval(tick, 1000);
-    return () => clearInterval(id);
-  }, [target]);
-
-  const s = left === null ? 0 : Math.floor(left / 1000);
-  return {
-    days: pad(Math.floor(s / 86400)),
-    hours: pad(Math.floor(s / 3600) % 24),
-    mins: pad(Math.floor(s / 60) % 60),
-    secs: pad(s % 60),
-  };
-}
 
 function WaitlistForm() {
   const [email, setEmail] = useState('');
@@ -110,7 +84,6 @@ function WaitlistForm() {
 }
 
 export default function LandingPage() {
-  const cd = useCountdown(LAUNCH_DATE);
   const marqueeItems = [
     'Roadside Assistance',
     'Verified Operators',
@@ -141,7 +114,7 @@ export default function LandingPage() {
         <div className="min-w-0">
           <div className="inline-flex items-center gap-2.5 rounded-full border border-[#E4E8F0] bg-white py-1.5 pl-3 pr-4">
             <span className="nl-pulse-dot block h-2 w-2 rounded-full bg-[#14B8A6]" />
-            <span className="text-[11.5px] font-bold uppercase tracking-[.14em] text-[#003DB4]">LRR launches Monday 28th</span>
+            <span className="text-[11.5px] font-bold uppercase tracking-[.14em] text-[#003DB4]">LRR is live</span>
           </div>
 
           <h1 className="mt-6 text-[46px] font-extrabold leading-[.98] tracking-[-.045em] sm:text-[64px] md:text-[78px]">
@@ -258,7 +231,7 @@ export default function LandingPage() {
             Help is <em className="not-italic italic text-[#003DB4]">on the way.</em>
           </h2>
           <p className="mt-5 max-w-[62ch] text-[17.5px] leading-relaxed text-[#7B768E]">
-            LRR — Local Roadside Rescue — connects stranded motorists with a network of verified roadside operators over WhatsApp. It goes live Monday 28th. Request help, see the price before you confirm, and get a WhatsApp update the moment your operator arrives.
+            LRR — Local Roadside Rescue — connects stranded motorists with a network of verified roadside operators over WhatsApp. Request help, see the price before you confirm, and get a WhatsApp update the moment your operator arrives.
           </p>
 
           <div className="mt-[52px] grid grid-cols-1 gap-5 sm:grid-cols-[repeat(auto-fit,minmax(280px,1fr))]">
@@ -293,25 +266,25 @@ export default function LandingPage() {
 
           <div className="mt-8 grid grid-cols-1 gap-8 rounded-2xl bg-[#003DB4] p-8 sm:p-12 md:grid-cols-2 md:items-center">
             <div>
-              <div className="text-[11.5px] font-bold uppercase tracking-[.2em] text-[#A9C2F5]">Launch countdown</div>
+              <div className="text-[11.5px] font-bold uppercase tracking-[.2em] text-[#A9C2F5]">Live now</div>
               <h3 className="mt-3.5 text-[28px] font-extrabold leading-[1.08] tracking-[-.035em] text-white sm:text-[38px]">
-                LRR is almost
+                LRR is
                 <br />
                 <em className="not-italic italic text-[#A9C2F5]">here.</em>
               </h3>
               <p className="mt-3.5 max-w-[46ch] text-base leading-relaxed text-[#DCE6FA]">
-                One WhatsApp message will get a verified operator dispatched to you. Operators can register for the network before day one — no setup fee, no long contract.
+                One WhatsApp message gets a verified operator dispatched to you. Operators can register for the network any time — no setup fee, no long contract.
               </p>
             </div>
             <div className="flex min-w-0 flex-col items-start gap-5">
-              <div className="flex flex-wrap gap-2.5">
-                {[['Days', cd.days], ['Hours', cd.hours], ['Minutes', cd.mins], ['Seconds', cd.secs]].map(([label, val]) => (
-                  <div key={label} className="min-w-[82px] rounded-2xl border border-white/25 bg-white/10 px-4 py-3.5">
-                    <div className="text-[34px] font-extrabold leading-none tracking-[-.04em] tabular-nums text-white">{val}</div>
-                    <div className="mt-1.5 text-[9.5px] font-bold uppercase tracking-[.16em] text-[#A9C2F5]">{label}</div>
-                  </div>
-                ))}
-              </div>
+              <a
+                href={getLrrUrl()}
+                target="_blank"
+                rel="noreferrer"
+                className="rounded-2xl bg-white px-[26px] py-4 text-[15px] font-semibold text-[#003DB4] transition-colors hover:bg-[#DCE6FA]"
+              >
+                Try LRR now →
+              </a>
             </div>
           </div>
         </div>
