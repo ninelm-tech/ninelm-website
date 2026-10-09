@@ -1,4 +1,5 @@
 import Logo from './Logo';
+import { getLrrUrl } from '@/config/env';
 
 export default function SiteHeader() {
   return (
@@ -20,17 +21,19 @@ export default function SiteHeader() {
               </svg>
             </button>
             <div className="invisible absolute left-1/2 top-full -translate-x-1/2 pt-3 opacity-0 transition-all group-hover:visible group-hover:opacity-100">
-              <div className="flex w-[140px] flex-col rounded-2xl border border-[#E4E8F0] bg-white p-2 shadow-[0_16px_40px_rgba(0,20,60,.12)]">
-                <a href="/#lrr" className="rounded-lg px-3 py-2.5 text-[14px] font-medium text-[#090216] transition-colors hover:bg-[#F6FAFF]">LRR</a>
+              <div className="flex w-[230px] flex-col rounded-2xl border border-[#E4E8F0] bg-white p-2 shadow-[0_16px_40px_rgba(0,20,60,.12)]">
+                <a href={getLrrUrl()} target="_blank" rel="noreferrer" className="whitespace-nowrap rounded-lg px-3 py-2.5 text-[14px] font-medium text-[#090216] transition-colors hover:bg-[#F6FAFF]">Local Roadside Rescue (LRR)</a>
               </div>
             </div>
           </div>
         </nav>
         <a
-          href="/#waitlist"
+          href={getLrrUrl()}
+          target="_blank"
+          rel="noreferrer"
           className="flex-none whitespace-nowrap rounded-2xl bg-[#003DB4] px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#00287a]"
         >
-          Join Waitlist
+          Try LRR
         </a>
       </div>
     </header>
