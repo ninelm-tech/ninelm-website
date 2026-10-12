@@ -34,9 +34,7 @@ export default function SiteFooter() {
           <Logo height={24} />
         </a>
         <div className="flex flex-wrap gap-[26px]">
-          {/* Re-enable at launch. The URL follows NEXT_PUBLIC_APP_ENV via getLrrUrl().
           <a href={getLrrUrl()} target="_blank" rel="noreferrer" className="text-sm font-medium text-[#7B768E] transition-colors hover:text-[#003DB4]">LRR</a>
-          */}
           <a href="mailto:hello@ninelm.com" className="text-sm font-medium text-[#7B768E] transition-colors hover:text-[#003DB4]">hello@ninelm.com</a>
           <a href="/privacy" className="text-sm font-medium text-[#7B768E] transition-colors hover:text-[#003DB4]">Privacy</a>
           <a href="/terms" className="text-sm font-medium text-[#7B768E] transition-colors hover:text-[#003DB4]">Terms</a>

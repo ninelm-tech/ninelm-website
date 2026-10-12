@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import SiteHeader from '@/components/SiteHeader';
 import SiteFooter from '@/components/SiteFooter';
+import { getLrrUrl } from '@/config/env';
 
 export const metadata: Metadata = {
   title: 'Terms of Service — Ninelm',
@@ -178,12 +179,12 @@ export default function TermsPage() {
                 <em className="italic text-[#A9C2F5]">operator?</em>
               </h3>
               <p className="mt-3.5 max-w-[44ch] text-base leading-relaxed text-[#DCE6FA]">
-                Verification opens before launch. Tell us about your business and we&apos;ll walk you through it.
+                Register your business directly in the app — we&apos;ll walk you through verification from there.
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
-              <a href="/#waitlist" className="rounded-2xl bg-white px-[26px] py-4 text-[15px] font-bold text-[#003DB4] transition-colors hover:bg-[#DCE6FA]">
-                Join the waitlist →
+              <a href={getLrrUrl()} target="_blank" rel="noreferrer" className="rounded-2xl bg-white px-[26px] py-4 text-[15px] font-bold text-[#003DB4] transition-colors hover:bg-[#DCE6FA]">
+                Register now →
               </a>
               <a href="/privacy" className="rounded-2xl border border-white/40 px-[26px] py-4 text-[15px] font-semibold text-white transition-colors hover:bg-white/10">
                 Read the privacy policy

@@ -1,8 +1,6 @@
-'use client';
-
-import { useEffect, useState } from 'react';
 import SiteHeader from './SiteHeader';
 import SiteFooter from './SiteFooter';
+import { getLrrUrl } from '@/config/env';
 
 // Ninelm brand colours (this design)
 // Blue:   #003DB4 / hover #00287a
@@ -12,105 +10,7 @@ import SiteFooter from './SiteFooter';
 // Border: #E4E8F0
 // Teal:   #14B8A6 / dark #0F766E
 
-const LAUNCH_DATE = new Date('2026-09-28T09:00:00+01:00').getTime();
-
-function pad(n: number) {
-  return String(n).padStart(2, '0');
-}
-
-function useCountdown(target: number) {
-  // Start at null (not Date.now()-derived) so server and pre-hydration client
-  // markup match exactly; the real value is only computed after mount.
-  const [left, setLeft] = useState<number | null>(null);
-
-  useEffect(() => {
-    const tick = () => setLeft(Math.max(0, target - Date.now()));
-    tick();
-    const id = setInterval(tick, 1000);
-    return () => clearInterval(id);
-  }, [target]);
-
-  const s = left === null ? 0 : Math.floor(left / 1000);
-  return {
-    days: pad(Math.floor(s / 86400)),
-    hours: pad(Math.floor(s / 3600) % 24),
-    mins: pad(Math.floor(s / 60) % 60),
-    secs: pad(s % 60),
-  };
-}
-
-function WaitlistForm() {
-  const [email, setEmail] = useState('');
-  const [state, setState] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-  const [errorMsg, setErrorMsg] = useState('');
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (!email) return;
-    setState('loading');
-    setErrorMsg('');
-
-    try {
-      const res = await fetch('/api/waitlist', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
-      });
-
-      if (res.ok) {
-        setState('success');
-        setEmail('');
-      } else {
-        const data = await res.json();
-        setErrorMsg(data.error ?? 'Something went wrong. Try again.');
-        setState('error');
-      }
-    } catch {
-      setErrorMsg('Network error. Please try again.');
-      setState('error');
-    }
-  }
-
-  if (state === 'success') {
-    return (
-      <div className="mt-8 flex items-center justify-center gap-3 rounded-2xl border border-[#E4E8F0] bg-white px-6 py-5">
-        <span className="text-[#0F766E]">✓</span>
-        <span className="text-sm font-semibold text-[#0F766E]">You&apos;re on the list — we&apos;ll be in touch.</span>
-      </div>
-    );
-  }
-
-  return (
-    <>
-      <form
-        onSubmit={handleSubmit}
-        className="mx-auto mt-8 flex max-w-[520px] flex-wrap gap-2.5 rounded-2xl border border-[#E4E8F0] bg-white p-2"
-      >
-        <input
-          type="email"
-          required
-          placeholder="your@email.com"
-          aria-label="Email address"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          disabled={state === 'loading'}
-          className="min-w-0 flex-1 basis-[220px] rounded-lg border-0 bg-transparent px-3.5 py-3 text-[15.5px] text-[#090216] outline-none placeholder:text-[#090216]/30"
-        />
-        <button
-          type="submit"
-          disabled={state === 'loading'}
-          className="shrink-0 rounded-xl bg-[#003DB4] px-6 py-3.5 text-[15px] font-semibold text-white transition-colors hover:bg-[#00287a] disabled:opacity-60"
-        >
-          {state === 'loading' ? 'Joining…' : 'Join Waitlist'}
-        </button>
-      </form>
-      {state === 'error' && <p className="mt-3 text-center text-xs text-red-500">{errorMsg}</p>}
-    </>
-  );
-}
-
 export default function LandingPage() {
-  const cd = useCountdown(LAUNCH_DATE);
   const marqueeItems = [
     'Roadside Assistance',
     'Verified Operators',
@@ -141,7 +41,7 @@ export default function LandingPage() {
         <div className="min-w-0">
           <div className="inline-flex items-center gap-2.5 rounded-full border border-[#E4E8F0] bg-white py-1.5 pl-3 pr-4">
             <span className="nl-pulse-dot block h-2 w-2 rounded-full bg-[#14B8A6]" />
-            <span className="text-[11.5px] font-bold uppercase tracking-[.14em] text-[#003DB4]">LRR launches Monday 28th</span>
+            <span className="text-[11.5px] font-bold uppercase tracking-[.14em] text-[#003DB4]">LRR is live</span>
           </div>
 
           <h1 className="mt-6 text-[46px] font-extrabold leading-[.98] tracking-[-.045em] sm:text-[64px] md:text-[78px]">
@@ -158,8 +58,8 @@ export default function LandingPage() {
             <a href="#lrr" className="rounded-2xl bg-[#003DB4] px-[26px] py-4 text-[15px] font-semibold text-white transition-colors hover:bg-[#00287a]">
               See our first product →
             </a>
-            <a href="#waitlist" className="rounded-2xl border border-[#E4E8F0] bg-white px-[26px] py-4 text-[15px] font-semibold text-[#090216] transition-colors hover:border-[#003DB4] hover:text-[#003DB4]">
-              Join waitlist
+            <a href={getLrrUrl()} target="_blank" rel="noreferrer" className="rounded-2xl border border-[#E4E8F0] bg-white px-[26px] py-4 text-[15px] font-semibold text-[#090216] transition-colors hover:border-[#003DB4] hover:text-[#003DB4]">
+              Try LRR now
             </a>
           </div>
 
@@ -258,7 +158,7 @@ export default function LandingPage() {
             Help is <em className="not-italic italic text-[#003DB4]">on the way.</em>
           </h2>
           <p className="mt-5 max-w-[62ch] text-[17.5px] leading-relaxed text-[#7B768E]">
-            LRR — Local Roadside Rescue — connects stranded motorists with a network of verified roadside operators over WhatsApp. It goes live Monday 28th. Request help, see the price before you confirm, and get a WhatsApp update the moment your operator arrives.
+            LRR — Local Roadside Rescue — connects stranded motorists with a network of verified roadside operators over WhatsApp. Request help, see the price before you confirm, and get a WhatsApp update the moment your operator arrives.
           </p>
 
           <div className="mt-[52px] grid grid-cols-1 gap-5 sm:grid-cols-[repeat(auto-fit,minmax(280px,1fr))]">
@@ -291,27 +191,25 @@ export default function LandingPage() {
             </div>
           </div>
 
-          <div className="mt-8 grid grid-cols-1 gap-8 rounded-2xl bg-[#003DB4] p-8 sm:p-12 md:grid-cols-2 md:items-center">
-            <div>
-              <div className="text-[11.5px] font-bold uppercase tracking-[.2em] text-[#A9C2F5]">Launch countdown</div>
-              <h3 className="mt-3.5 text-[28px] font-extrabold leading-[1.08] tracking-[-.035em] text-white sm:text-[38px]">
-                LRR is almost
-                <br />
-                <em className="not-italic italic text-[#A9C2F5]">here.</em>
-              </h3>
-              <p className="mt-3.5 max-w-[46ch] text-base leading-relaxed text-[#DCE6FA]">
-                One WhatsApp message will get a verified operator dispatched to you. Operators can register for the network before day one — no setup fee, no long contract.
-              </p>
-            </div>
-            <div className="flex min-w-0 flex-col items-start gap-5">
-              <div className="flex flex-wrap gap-2.5">
-                {[['Days', cd.days], ['Hours', cd.hours], ['Minutes', cd.mins], ['Seconds', cd.secs]].map(([label, val]) => (
-                  <div key={label} className="min-w-[82px] rounded-2xl border border-white/25 bg-white/10 px-4 py-3.5">
-                    <div className="text-[34px] font-extrabold leading-none tracking-[-.04em] tabular-nums text-white">{val}</div>
-                    <div className="mt-1.5 text-[9.5px] font-bold uppercase tracking-[.16em] text-[#A9C2F5]">{label}</div>
-                  </div>
-                ))}
+          <div className="mt-8 rounded-2xl bg-[#003DB4] p-8 sm:p-12">
+            <div className="flex flex-col items-start gap-8 sm:flex-row sm:items-center sm:justify-between">
+              <div className="min-w-0">
+                <div className="text-[11.5px] font-bold uppercase tracking-[.2em] text-[#A9C2F5]">Live now</div>
+                <h3 className="mt-3.5 text-[28px] font-extrabold leading-[1.08] tracking-[-.035em] text-white sm:text-[38px]">
+                  LRR is <em className="not-italic italic text-[#A9C2F5]">here.</em>
+                </h3>
+                <p className="mt-3.5 max-w-[46ch] text-base leading-relaxed text-[#DCE6FA]">
+                  One WhatsApp message gets a verified operator dispatched to you. Operators can register for the network any time — no setup fee, no long contract.
+                </p>
               </div>
+              <a
+                href={getLrrUrl()}
+                target="_blank"
+                rel="noreferrer"
+                className="flex-none whitespace-nowrap rounded-2xl bg-white px-[26px] py-4 text-[15px] font-semibold text-[#003DB4] transition-colors hover:bg-[#DCE6FA]"
+              >
+                Try LRR now →
+              </a>
             </div>
           </div>
         </div>
@@ -376,9 +274,6 @@ export default function LandingPage() {
               <a href="mailto:hello@ninelm.com?subject=Project%20enquiry" className="whitespace-nowrap rounded-2xl bg-[#003DB4] px-[26px] py-4 text-[15px] font-semibold text-white transition-colors hover:bg-[#00287a]">
                 Start a conversation →
               </a>
-              <a href="#waitlist" className="whitespace-nowrap rounded-2xl border border-[#E4E8F0] bg-white px-[26px] py-4 text-[15px] font-semibold text-[#090216] transition-colors hover:border-[#003DB4] hover:text-[#003DB4]">
-                Stay in the loop
-              </a>
             </div>
           </div>
           <div>
@@ -401,21 +296,6 @@ export default function LandingPage() {
               </div>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* Waitlist */}
-      <section id="waitlist" className="bg-[#F6FAFF]">
-        <div className="mx-auto max-w-[720px] px-6 pt-[104px] pb-[112px] text-center">
-          <div className="text-[11.5px] font-bold uppercase tracking-[.2em] text-[#003DB4]">Get early access</div>
-          <h2 className="mt-[18px] text-[36px] font-extrabold leading-[1.04] tracking-[-.04em] sm:text-[56px]">
-            Be part of <em className="not-italic italic text-[#003DB4]">the pilot.</em>
-          </h2>
-          <p className="mx-auto mt-5 max-w-[52ch] text-[17.5px] leading-relaxed text-[#7B768E]">
-            We&apos;re onboarding a small group of motorists and operators for LRR. Leave your email and we&apos;ll reach out directly.
-          </p>
-          <WaitlistForm />
-          <p className="mt-4 text-[13.5px] text-[#7B768E]">No spam. We&apos;ll only contact you when we&apos;re ready to onboard.</p>
         </div>
       </section>
 
